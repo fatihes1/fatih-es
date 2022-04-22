@@ -1,0 +1,2 @@
+// APi = pk.eyJ1IjoiZmF0aWhlcyIsImEiOiJjbDJhMXJkbzIwMTVqM2JwYXYxangxZ3dqIn0.R16RBSLx4davXeqXFUdePA
+// const URL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURICompoenent(city) + '.json?access_token='+ API_KEY +'&limit=1';
