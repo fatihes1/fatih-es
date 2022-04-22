@@ -1,5 +1,6 @@
 const express = require('express');
 const geocode = require('./utils/geocode');
+const weather = require('./utils/weather');
 const PORT = process.env.PORT || 3000;
 
 
@@ -7,9 +8,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.get('/', (req, res) => {
-    // res.sendFile(__dirname+"../public/index.html");
+    res.sendFile(__dirname+"/index.html");
     // res.send(typeof __dirname);
-    res.send('test')
+    // res.send('test')
 })
 
 
@@ -33,7 +34,7 @@ app.get('/test_json', (req, res) => {
 app.get('/test_geocode', (req, res) => {
     geocode('Bursa', (err, {enlem, boylam, konum}) => {
         if(err) {
-            res.send(err);
+            return res.send(err);
         }
         const dataJSON = {
             location : konum,
@@ -44,7 +45,29 @@ app.get('/test_geocode', (req, res) => {
     })
 })
 
+app.get('/test_weather', (req, res) => {
+    geocode('Bursa', (err, {enlem, boylam, konum}) => {
+        if(err){
+            res.send(err);
+        }
+        weather(enlem, boylam, (err, data) => {
+            if(err){
+              return res.send(err);
+            }
+            const showData = {
+                location : konum,
+                temperature : data.temperature,
+                pressure : data.pressure,
+                humidity : data.humidity
+            }
+            res.send(showData)
+        })
+    })
+})
 
+app.get('*', (req, res)=> {
+    res.send('We could not found the page that you want')
+})
 
 
 
