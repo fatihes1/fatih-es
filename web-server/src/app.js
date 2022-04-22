@@ -1,9 +1,48 @@
 const express = require('express');
-
+const geocode = require('./utils/geocode');
 const PORT = process.env.PORT || 3000;
+
+
 
 const app = express();
 
+app.get('/', (req, res) => {
+    // res.sendFile(__dirname+"../public/index.html");
+    // res.send(typeof __dirname);
+    res.send('test')
+})
+
+
+app.get('/test_text', (req, res) => {
+    res.send('18360859021')
+})
+
+app.get('/test_html', (req, res) => {
+    res.send('<h2>Fatih ES with HTML H2 TAGS</h2>')
+})
+
+app.get('/test_json', (req, res) => {
+    const studentInfo = {
+        student_no : 18360859021,
+        student_name : 'Fatih',
+        student_surname : 'ES'
+    }
+    res.send(studentInfo);
+})
+
+app.get('/test_geocode', (req, res) => {
+    geocode('Bursa', (err, {enlem, boylam, konum}) => {
+        if(err) {
+            res.send(err);
+        }
+        const dataJSON = {
+            location : konum,
+            latitude : enlem,
+            longitude : boylam
+        }
+        res.send(dataJSON);
+    })
+})
 
 
 
